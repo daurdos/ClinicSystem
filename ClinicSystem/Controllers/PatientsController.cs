@@ -21,15 +21,15 @@ namespace ClinicSystem.Controllers
         // GET: Patients
         public async Task<IActionResult> Index(string searchString)
         {
-            var movies = from m in _context.Patient
+            var patients = from m in _context.Patient
                          select m;
 
             if (!String.IsNullOrEmpty(searchString))
             {
-                movies = movies.Where(s => s.FName.Contains(searchString));
+                patients = patients.Where(s => s.FName.Contains(searchString));
             }
 
-            return View(await movies.ToListAsync());
+            return View(await patients.ToListAsync());
         }
 
         // GET: Patients/Details/5
@@ -156,5 +156,64 @@ namespace ClinicSystem.Controllers
         {
             return _context.Patient.Any(e => e.Id == id);
         }
+
+        //GET THE FORM FOR VISITS INSERT
+        [HttpGet]
+        public IActionResult IndexVisit(string iin)
+        {
+            var visits = from m in _context.Visit
+                           select m;
+
+            if (!String.IsNullOrEmpty(iin))
+            {
+                visits = visits.Where(s => s.PatientIin.Contains(iin));
+            }
+
+            return View(visits.ToList());
+
+        }
+
+
+
+        // GET: Visits/Create
+        public IActionResult CreateVisit(int id)
+        {
+            ViewBag.Id = id;
+            return View();
+        }
+
+
+        // POST: Visits/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateVisit([Bind("VisitId,SFName,SLName,Specialist,Complaint,Diagnosis,VisitDate,PatientId,PatientIin")] Visit visit)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Add(visit);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(visit);
+        }
+
+        // SEND THE DATA INTO DATABASE.VISITS
+        [HttpPost]
+        public IActionResult FillVisit(Visit visit)
+        {
+            _context.Visit.Add(visit);
+            visit.VisitDate = DateTime.Now;
+            ViewBag.ColDate = visit.VisitDate;
+            _context.SaveChanges();
+            return View();
+        }
+
+
+
+
+
+
     }
 }

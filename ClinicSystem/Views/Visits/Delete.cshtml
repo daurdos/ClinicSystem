@@ -1,0 +1,64 @@
+﻿@model ClinicSystem.Models.Visit
+
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Visit</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.SFName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.SFName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.SLName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.SLName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Specialist)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Specialist)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Complaint)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Complaint)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Diagnosis)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Diagnosis)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.VisitDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.VisitDate)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.PatientId)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.PatientId)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="VisitId" />
+        <input type="submit" value="Delete" class="btn btn-default" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>

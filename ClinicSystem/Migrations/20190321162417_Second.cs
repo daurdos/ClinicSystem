@@ -1,8 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ClinicSystem.Migrations
 {
-    public partial class Iin : Migration
+    public partial class Second : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -27,7 +29,6 @@ namespace ClinicSystem.Migrations
             migrationBuilder.AlterColumn<string>(
                 name: "Iin",
                 table: "Patient",
-                type: "varchar(12)",
                 maxLength: 12,
                 nullable: false,
                 oldClrType: typeof(string),
@@ -57,10 +58,32 @@ namespace ClinicSystem.Migrations
                 nullable: false,
                 oldClrType: typeof(string),
                 oldNullable: true);
+
+            migrationBuilder.CreateTable(
+                name: "Visit",
+                columns: table => new
+                {
+                    VisitId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    SFName = table.Column<string>(nullable: true),
+                    SLName = table.Column<string>(nullable: true),
+                    Specialist = table.Column<string>(nullable: true),
+                    Complaint = table.Column<string>(nullable: true),
+                    Diagnosis = table.Column<string>(nullable: true),
+                    VisitDate = table.Column<DateTime>(nullable: false),
+                    PatientId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Visit", x => x.VisitId);
+                });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Visit");
+
             migrationBuilder.AlterColumn<string>(
                 name: "Phone",
                 table: "Patient",
@@ -83,7 +106,6 @@ namespace ClinicSystem.Migrations
                 type: "varchar(12)",
                 nullable: true,
                 oldClrType: typeof(string),
-                oldType: "varchar(12)",
                 oldMaxLength: 12);
 
             migrationBuilder.AlterColumn<string>(

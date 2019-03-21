@@ -1,0 +1,61 @@
+﻿@model ClinicSystem.Models.Visit
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Visit</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.SFName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.SFName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.SLName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.SLName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Specialist)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Specialist)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Complaint)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Complaint)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Diagnosis)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Diagnosis)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.VisitDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.VisitDate)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.PatientId)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.PatientId)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.VisitId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
