@@ -17,7 +17,7 @@ namespace ClinicSystem.Models
         public DateTime VisitDate { get; set; }
 
         public int PatientId { get; set; }
+        public Patient Patient { get; set; }
 
-        public string PatientIin { get; set; }
     }
 }

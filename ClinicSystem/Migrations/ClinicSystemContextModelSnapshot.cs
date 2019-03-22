@@ -67,8 +67,6 @@ namespace ClinicSystem.Migrations
 
                     b.Property<int>("PatientId");
 
-                    b.Property<string>("PatientIin");
-
                     b.Property<string>("SFName");
 
                     b.Property<string>("SLName");
@@ -79,7 +77,17 @@ namespace ClinicSystem.Migrations
 
                     b.HasKey("VisitId");
 
+                    b.HasIndex("PatientId");
+
                     b.ToTable("Visit");
+                });
+
+            modelBuilder.Entity("ClinicSystem.Models.Visit", b =>
+                {
+                    b.HasOne("ClinicSystem.Models.Patient", "Patient")
+                        .WithMany("Visit")
+                        .HasForeignKey("PatientId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

@@ -166,7 +166,7 @@ namespace ClinicSystem.Controllers
 
             if (!String.IsNullOrEmpty(iin))
             {
-                visits = visits.Where(s => s.PatientIin.Contains(iin));
+                visits = visits.Include(x => x.Patient).Where(x => x.Patient.Iin == iin);
             }
 
             return View(visits.ToList());
@@ -221,7 +221,7 @@ namespace ClinicSystem.Controllers
 
 
         // GET: Visits/Edit/5
-        public async Task<IActionResult> EditVisit(int? id)
+        public async Task<IActionResult> EditVisit(int id)
         {
             if (id == null)
             {

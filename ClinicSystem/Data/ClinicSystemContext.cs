@@ -17,5 +17,7 @@ namespace ClinicSystem.Models
         public DbSet<ClinicSystem.Models.Patient> Patient { get; set; }
 
         public DbSet<ClinicSystem.Models.Visit> Visit { get; set; }
+
+
     }
 }

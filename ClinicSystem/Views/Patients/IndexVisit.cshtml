@@ -45,9 +45,6 @@
             <th>
                 @Html.DisplayNameFor(model => model.PatientId)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PatientIin)
-            </th>
             <th></th>
         </tr>
     </thead>
@@ -75,9 +72,6 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.PatientId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PatientIin)
             </td>
             <td>
                 <a asp-action="EditVisit" asp-route-id="@item.VisitId">Edit</a> |

@@ -184,7 +184,7 @@ using ClinicSystem.Models;
             WriteLiteral("\r\n        </dd>\r\n    </dl>\r\n</div>\r\n<div>\r\n    ");
             EndContext();
             BeginContext(1208, 54, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "6407258e9e3440c9819c283cdfbdd057", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "bcd0e9ae87e34d61a146ad3b12ee365a", async() => {
                 BeginContext(1254, 4, true);
                 WriteLiteral("Edit");
                 EndContext();
@@ -219,7 +219,7 @@ using ClinicSystem.Models;
             WriteLiteral(" |\r\n    ");
             EndContext();
             BeginContext(1270, 38, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "98395bcaa035415dae289e55e409133e", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "bf10b49017fa471db3d83c0ee206a7bf", async() => {
                 BeginContext(1292, 12, true);
                 WriteLiteral("Back to List");
                 EndContext();

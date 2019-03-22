@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -41,6 +42,8 @@ namespace ClinicSystem.Models
         [StringLength(20, MinimumLength = 4)]
         [Required]
         public string District { get; set; }
+
+        public ICollection<Visit> Visit { get; set; }
     }
 }
 
