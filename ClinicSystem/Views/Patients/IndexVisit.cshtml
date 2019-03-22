@@ -5,18 +5,11 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
-
-<p>
-    <a asp-action="CreateVisit">Create New</a>
-</p>
-
+<h2>Visit Index</h2>
 
 <form asp-controller="Patients" asp-action="IndexVisit" method="get">
     <p>
-        Title: <input type="hidden" name="Iin">
-        <input type="submit" value="Find" />
-
+        <input type="hidden" name="Patient.Iin">
     </p>
 </form>
 
