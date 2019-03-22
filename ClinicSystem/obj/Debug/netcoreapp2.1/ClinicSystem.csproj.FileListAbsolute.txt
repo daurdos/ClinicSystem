@@ -42,3 +42,6 @@ C:\Users\d.dosymbek\Google Диск\Обучение\repos\ClinicSystem\ClinicSy
 C:\Users\d.dosymbek\Google Диск\Обучение\repos\ClinicSystem\ClinicSystem\obj\Debug\netcoreapp2.1\Razor\Views\Visits\Index.g.cshtml.cs
 C:\Users\d.dosymbek\Google Диск\Обучение\repos\ClinicSystem\ClinicSystem\obj\Debug\netcoreapp2.1\Razor\Views\Patients\CreateVisit.g.cshtml.cs
 C:\Users\d.dosymbek\Google Диск\Обучение\repos\ClinicSystem\ClinicSystem\obj\Debug\netcoreapp2.1\Razor\Views\Patients\IndexVisit.g.cshtml.cs
+C:\Users\d.dosymbek\Google Диск\Обучение\repos\ClinicSystem\ClinicSystem\obj\Debug\netcoreapp2.1\Razor\Views\Patients\EditVisit.g.cshtml.cs
+C:\Users\d.dosymbek\Google Диск\Обучение\repos\ClinicSystem\ClinicSystem\obj\Debug\netcoreapp2.1\Razor\Views\Patients\DeleteVisit.g.cshtml.cs
+C:\Users\d.dosymbek\Google Диск\Обучение\repos\ClinicSystem\ClinicSystem\obj\Debug\netcoreapp2.1\Razor\Views\Patients\DetailsVisit.g.cshtml.cs
