@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ClinicSystem.Models.Patient>
+﻿@model ClinicSystem.Models.DistrictViewModel
 
 @{
     ViewData["Title"] = "Index";
@@ -12,38 +12,52 @@
 
 <form asp-controller="Patients" asp-action="Index" method="get">
     <p>
-        Title: <input type="text" name="SearchString">
+
+        <select asp-for="PatientDistrict" asp-items="Model.Districts">
+            <option value="">All</option>
+        </select>
+
+        Please insert IIN: <input type="text" name="SearchString">
         <input type="submit" value="Find" />
     </p>
 </form>
-
+<p>
+    <a asp-action="IndexVisit">See all history</a>
+</p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Iin)
+                @Html.DisplayNameFor(model => model.Patients[0].Id)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FName)
+                @Html.DisplayNameFor(model => model.Patients[0].Iin)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.LName)
+                @Html.DisplayNameFor(model => model.Patients[0].FName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Address)
+                @Html.DisplayNameFor(model => model.Patients[0].LName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Phone)
+                @Html.DisplayNameFor(model => model.Patients[0].Address)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.District)
+                @Html.DisplayNameFor(model => model.Patients[0].Phone)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Patients[0].District)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+        @foreach (var item in Model.Patients)
+        {
         <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Iin)
             </td>
@@ -66,10 +80,9 @@
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.Id">Delete</a> |
-                <a asp-action="IndexVisit" asp-route-id="@item.Iin">See history</a> |
                 <a asp-action="CreateVisit" asp-route-id="@item.Id">Add history</a> |
             </td>
         </tr>
-}
+        }
     </tbody>
 </table>

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ClinicSystem.Models.Visit>
+﻿@model ClinicSystem.Models.SpecialistViewModel
 
 @{
     ViewData["Title"] = "Index";
@@ -9,7 +9,12 @@
 
 <form asp-controller="Patients" asp-action="IndexVisit" method="get">
     <p>
-        <input type="hidden" name="Patient.Iin">
+        <select asp-for="PatientSpecialist" asp-items="Model.Specialists">
+            <option value="">All</option>
+        </select>
+
+        Please insert specialist's last name: <input type="text" asp-for="SearchString" />
+        <input type="submit" value="Filter" />
     </p>
 </form>
 
@@ -18,31 +23,31 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.SFName)
+                @Html.DisplayNameFor(model => model.Visits[0].SFName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.SLName)
+                @Html.DisplayNameFor(model => model.Visits[0].SLName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Specialist)
+                @Html.DisplayNameFor(model => model.Visits[0].Specialist)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Complaint)
+                @Html.DisplayNameFor(model => model.Visits[0].Complaint)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Diagnosis)
+                @Html.DisplayNameFor(model => model.Visits[0].Diagnosis)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.VisitDate)
+                @Html.DisplayNameFor(model => model.Visits[0].VisitDate)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.PatientId)
+                @Html.DisplayNameFor(model => model.Visits[0].PatientId)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
+        @foreach (var item in Model.Visits)
         {
         <tr>
             <td>

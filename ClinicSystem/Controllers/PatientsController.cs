@@ -17,22 +17,40 @@ namespace ClinicSystem.Controllers
         {
             _context = context;
         }
-
-        // GET: Patients
-        public async Task<IActionResult> Index(string searchString)
+        
+        
+        // GET: Поиск пациентов
+        public async Task<IActionResult> Index(string patientDistrict, string searchString)
         {
+            // Use LINQ to get list of genres.
+            IQueryable<string> districtQuery = from m in _context.Patient
+                                            orderby m.District
+                                            select m.District;
+
             var patients = from m in _context.Patient
                          select m;
 
-            if (!String.IsNullOrEmpty(searchString))
+            if (!string.IsNullOrEmpty(searchString))
             {
-                patients = patients.Where(s => s.FName.Contains(searchString));
+                patients = patients.Where(s => s.Iin.Contains(searchString));
             }
 
-            return View(await patients.ToListAsync());
-        }
+            if (!string.IsNullOrEmpty(patientDistrict))
+            {
+                patients = patients.Where(x => x.District == patientDistrict);
+            }
 
-        // GET: Patients/Details/5
+            var patientDistrictVM = new DistrictViewModel
+            {
+                Districts = new SelectList(await districtQuery.Distinct().ToListAsync()),
+                Patients = await patients.ToListAsync()
+            };
+
+            return View(patientDistrictVM);
+        }
+        
+
+        // GET: Просмотр деталей пациентов
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -49,16 +67,16 @@ namespace ClinicSystem.Controllers
 
             return View(patient);
         }
+        
 
-        // GET: Patients/Create
+        // GET: Получение формы для создания пациентв
         public IActionResult Create()
         {
             return View();
         }
+        
 
-        // POST: Patients/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // POST: Отправка данных пациента в БД
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Iin,FName,LName,Address,Phone,District")] Patient patient)
@@ -71,8 +89,9 @@ namespace ClinicSystem.Controllers
             }
             return View(patient);
         }
+        
 
-        // GET: Patients/Edit/5
+        // GET: получение формы для изменения пациента
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -88,9 +107,8 @@ namespace ClinicSystem.Controllers
             return View(patient);
         }
 
-        // POST: Patients/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+
+        // POST: отправка обновленных данных в БД
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Iin,FName,LName,Address,Phone,District")] Patient patient)
@@ -123,7 +141,8 @@ namespace ClinicSystem.Controllers
             return View(patient);
         }
 
-        // GET: Patients/Delete/5
+
+        // GET: удаление пациента
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -141,7 +160,8 @@ namespace ClinicSystem.Controllers
             return View(patient);
         }
 
-        // POST: Patients/Delete/5
+
+        // POST: удаление пациента, обновление БД
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -152,54 +172,69 @@ namespace ClinicSystem.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+
+        // Функция возвращает существующих пациентов по id
         private bool PatientExists(int id)
         {
             return _context.Patient.Any(e => e.Id == id);
         }
 
-        //GET THE FORM FOR VISITS INSERT
+
+        //GET: Поиск истории
         [HttpGet]
-        public IActionResult IndexVisit(string iin)
+        public async Task<IActionResult> IndexVisit(string patientSpecialist, string searchString)
         {
+            IQueryable<string> SpecialistQuery = from m in _context.Visit
+                                               orderby m.Specialist
+                                               select m.Specialist;
+
             var visits = from m in _context.Visit
                            select m;
 
-            if (!String.IsNullOrEmpty(iin))
+            if (!string.IsNullOrEmpty(searchString))
             {
-                visits = visits.Include(x => x.Patient).Where(x => x.Patient.Iin == iin);
+                visits = visits.Where(s => s.SLName.Contains(searchString));
             }
 
-            return View(visits.ToList());
-
-        }
-
-
-
-        // GET: Visits/Create
-        public IActionResult CreateVisit(int id)
-        {
-            ViewBag.Id = id;
-            return View();
-        }
-
-
-        // POST: Visits/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateVisit([Bind("VisitId,SFName,SLName,Specialist,Complaint,Diagnosis,VisitDate,PatientId,PatientIin")] Visit visit)
-        {
-            if (ModelState.IsValid)
+            if (!string.IsNullOrEmpty(patientSpecialist))
             {
-                _context.Add(visit);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                visits = visits.Where(x => x.Specialist == patientSpecialist);
             }
-            return View(visit);
+
+            var patientSpecialistVM = new SpecialistViewModel
+            {
+                Specialists = new SelectList(await SpecialistQuery.Distinct().ToListAsync()),
+                Visits = await visits.ToListAsync()
+            };
+
+            return View(patientSpecialistVM);
         }
 
-        // SEND THE DATA INTO DATABASE.VISITS
+
+        // GET: создание истории 
+         public IActionResult CreateVisit(int id)
+         {
+             ViewBag.Id = id;
+             return View();
+         }
+
+
+        // POST: отправка данных истории в БД
+         [HttpPost]
+         [ValidateAntiForgeryToken]
+         public async Task<IActionResult> CreateVisit([Bind("VisitId,SFName,SLName,Specialist,Complaint,Diagnosis,VisitDate,PatientId,PatientIin")] Visit visit)
+         {
+             if (ModelState.IsValid)
+             {
+                 _context.Add(visit);
+                 await _context.SaveChangesAsync();
+                 return RedirectToAction(nameof(Index));
+             }
+             return View(visit);
+         }
+
+
+        // отправка данных истории в БД
         [HttpPost]
         public IActionResult FillVisit(Visit visit)
         {
@@ -211,16 +246,7 @@ namespace ClinicSystem.Controllers
         }
 
 
-
-
-
-
-
-
-
-
-
-        // GET: Visits/Edit/5
+        // GET: изменение истории
         public async Task<IActionResult> EditVisit(int id)
         {
             if (id == null)
@@ -236,9 +262,8 @@ namespace ClinicSystem.Controllers
             return View(visit);
         }
 
-        // POST: Visits/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+
+        // POST: изменение истории
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditVisit(int id, [Bind("VisitId,SFName,SLName,Specialist,Complaint,Diagnosis,VisitDate,PatientId")] Visit visit)
@@ -272,7 +297,7 @@ namespace ClinicSystem.Controllers
         }
 
 
-        // GET: Visits/Delete/5
+        // GET: удаление истории
         public async Task<IActionResult> DeleteVisit(int? id)
         {
             if (id == null)
@@ -290,7 +315,8 @@ namespace ClinicSystem.Controllers
             return View(visit);
         }
 
-        // POST: Visits/Delete/5
+
+        // POST: удаление истории
         [HttpPost, ActionName("DeleteVisit")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmedVisit(int id)
@@ -302,14 +328,14 @@ namespace ClinicSystem.Controllers
         }
 
 
+        // Функция возвращает существующие визиты по id
         private bool VisitExists(int id)
         {
             return _context.Visit.Any(e => e.VisitId == id);
         }
 
 
-
-        // GET: Visits/Details/5
+        // GET: Просмотр деталей визитов
         public async Task<IActionResult> DetailsVisit(int? id)
         {
             if (id == null)
